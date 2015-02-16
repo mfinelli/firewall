@@ -1,5 +1,17 @@
 #!/bin/bash
 
+# Get include path. (http://stackoverflow.com/a/12694189)
+dir="${BASH_SOURCE%/*}"
+if [[ ! -d "$dir" ]]; then
+    dir="$PWD"
+fi
+
+# Include functions.
+source "$dir"/include.sh
+
+# Make sure that we have permission.
+check_root
+
 iptables -F
 iptables -X
 iptables -t nat -F
