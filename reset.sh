@@ -12,17 +12,18 @@ source "$dir"/include.sh
 # Make sure that we have permission.
 check_root
 
+# Now we can actually change the iptables rules.
+arr=('nat' 'mangle' 'raw' 'security')
+
 iptables -F
 iptables -X
-iptables -t nat -F
-iptables -t nat -X
-iptables -t mangle -F
-iptables -t mangle -X
-iptables -t raw -F
-iptables -t raw -X
-iptables -t security -F
-iptables -t security -X
-iptables -P INPUT ACCEPT
-iptables -P FOREWARD ACCEPT
-iptables -P OUTPUT ACCEPT
 
+for item in "${arr[@]}"
+do
+    iptables -t "$item" -F
+    iptables -t "$item" -X
+done
+
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
