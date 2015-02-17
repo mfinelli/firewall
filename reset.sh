@@ -12,6 +12,9 @@ source "$dir"/include.sh
 # Make sure that we have permission.
 check_root
 
+# Make sure that iptables is actually installed.
+check_iptables
+
 # Now we can actually change the iptables rules.
 arr=('nat' 'mangle' 'raw' 'security')
 
