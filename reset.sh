@@ -15,16 +15,17 @@ check_root
 # Make sure that iptables is actually installed.
 check_iptables
 
-# Now we can actually change the iptables rules.
-arr=('nat' 'mangle' 'raw' 'security')
+# Now we can actually change the iptables rules. We don't need "filter" here
+# because that's the default table and is taken care of first, below.
+tables=('nat' 'mangle' 'raw' 'security')
 
 iptables -F
 iptables -X
 
-for item in "${arr[@]}"
+for table in "${tables[@]}"
 do
-    iptables -t "$item" -F
-    iptables -t "$item" -X
+    iptables -t "$table" -F
+    iptables -t "$table" -X
 done
 
 iptables -P INPUT ACCEPT
