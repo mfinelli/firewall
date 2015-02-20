@@ -21,9 +21,9 @@ function check_root () {
 
 # Check to make sure iptables is actually installed!
 # http://stackoverflow.com/a/677212
-function check_iptables () {
-    if ! hash iptables 2>/dev/null; then
-        error "Iptables not found. Do you need to install it?"
+function check_software () {
+    if ! hash "$1" 2>/dev/null; then
+        error "${1^} not found. Do you need to install it?"
         exit 2
     fi
 }

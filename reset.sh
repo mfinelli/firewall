@@ -13,7 +13,7 @@ source "$dir"/include.sh
 check_root
 
 # Make sure that iptables is actually installed.
-check_iptables
+check_software "iptables"
 
 # Now we can actually change the iptables rules. We don't need "filter" here
 # because that's the default table and is taken care of first, below.

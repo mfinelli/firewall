@@ -12,7 +12,7 @@ source "$dir"/include.sh
 # Make sure that we have permission.
 check_root
 # Make sure that iptables is actually installed.
-check_iptables
+check_software "iptables"
 
 # Create tcp and udp chains.
 iptables -N TCP
