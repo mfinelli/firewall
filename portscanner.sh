@@ -13,7 +13,7 @@ source "$dir"/include.sh
 check_root
 
 # Make sure that iptables is actually installed.
-check_iptables
+check_software "iptables"
 
 # syn scans.
 iptables -I TCP -p tcp -m recent --update --seconds 60 --name TCP-PORTSCAN -j REJECT --reject-with tcp-rst
