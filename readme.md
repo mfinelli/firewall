@@ -50,3 +50,17 @@ To open an arbitrary port:
 Or:
 
     $ ./open.sh 53 udp
+
+## What next?
+
+After running the scripts and opening your desired ports you should save the rules and make sure the iptables service is enabled with e.g., systemd:
+
+    # iptables-save > /etc/iptables/iptables.rules
+    # systemctl [start|enable] iptables
+    # systemctl [start|enable] sshguard
+
+Obviously, setting up your firewall is only a start. You should take every effort to lock your machine down by disabling root login through SSH, for example.
+
+## Disclaimer
+
+I don't claim to know anything about security. These scripts were created by basically following the guide at the Arch Linux wiki for my own personal use. It's great if you want to use them as well, but I am not liable if your machine gets owned. For more information see the license.
