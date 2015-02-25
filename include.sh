@@ -27,3 +27,12 @@ function check_software () {
         exit 2
     fi
 }
+
+# Uppercase and lowercase a string.
+# http://stackoverflow.com/a/2264537
+function uc () {
+    echo "$1" | tr '[:lower:]' '[:upper:]'
+}
+function lc () {
+    echo "$1" | tr '[:upper:]' '[:lower:]'
+}
