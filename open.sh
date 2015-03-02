@@ -33,6 +33,7 @@ case "$1" in
         ;;
     DNS|Dns|dns)
         iptables -A UDP -p udp --dport 53 -j ACCEPT
+        iptables -A TCP -p tcp --dport 53 -j ACCEPT
         ;;
     *)
         iptables -A $(uc "$2") -p $(lc "$2") --dport "$1" -j ACCEPT

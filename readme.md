@@ -41,7 +41,7 @@ The complete list of supported rules is:
 * Web: ports 80 and 443
 * HTTP: port 80
 * HTTPS: port 443
-* DNS: port 53 (UDP)
+* DNS: port 53
 
 To open an arbitrary port:
 
