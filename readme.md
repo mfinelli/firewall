@@ -26,7 +26,7 @@ Attempt to mitigate port scanner attacks.
 
 ### Sshguard
 
-Once you've installed sshguard you can add rules to your iptables. This will also open port 22.
+Once you've installed sshguard you can add rules to your iptables. This will also automatically setup sshguard to work on port 22. You will still need to open port 22 in order to connect via ssh. (See below)
 
     $ ./sshguard.sh
 
