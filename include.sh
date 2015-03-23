@@ -28,6 +28,20 @@ function check_software () {
     fi
 }
 
+# Check to see if a named chain already exists.
+# http://stackoverflow.com/a/10784612
+function chain_exists () {
+    if [[ $# -lt 1 || $# -gt 2 ]]; then
+        error "Chain_exists usage: chain_exists <chain_name> [table]"
+        exit 3
+    fi
+    local chain_name="$1"; shift
+    if [[ $# -eq 1 ]]; then
+        local table=" --table $1"
+    fi
+    iptables"$table" -n --list "$chain_name" > /dev/null 2>&1
+}
+
 # Uppercase and lowercase a string.
 # http://stackoverflow.com/a/2264537
 function uc () {
