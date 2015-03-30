@@ -1,42 +1,34 @@
 #!/bin/bash
 
-# Get include path. (http://stackoverflow.com/a/12694189)
-dir="${BASH_SOURCE%/*}"
-if [[ ! -d "$dir" ]]; then
-    dir="$PWD"
-fi
-
-# Include functions.
-source "$dir"/include.sh
-
-# Make sure that we have permission.
-check_root
-
-# Make sure that iptables is actually installed.
-check_software "iptables"
+# Open an individual port. You must specify port number and protocol.
+function open_port () {
+    echo "Opening port $1 over $(uc "$2")."
+    iptables -A $(uc "$2") -p $(lc "$2") --dport "$1" -j ACCEPT
+}
 
 # Check for defined rules first. If we don't hit any of these we'll fall
 # through and open individual ports.
-case "$1" in
-    SSH|Ssh|ssh)
-        iptables -A TCP -p tcp --dport 22 -j ACCEPT
-        ;;
-    WEB|Web|web)
-        iptables -A TCP -p tcp --dport 80 -j ACCEPT
-        iptables -A TCP -p tcp --dport 443 -j ACCEPT
-        ;;
-    HTTP|Http|http)
-        iptables -A TCP -p tcp --dport 80 -j ACCEPT
-        ;;
-    HTTPS|Https|https)
-        iptables -A TCP -p tcp --dport 443 -j ACCEPT
-        ;;
-    DNS|Dns|dns)
-        iptables -A UDP -p udp --dport 53 -j ACCEPT
-        iptables -A TCP -p tcp --dport 53 -j ACCEPT
-        ;;
-    *)
-        iptables -A $(uc "$2") -p $(lc "$2") --dport "$1" -j ACCEPT
-        ;;
-esac
-
+function open_port_entry () {
+    case "$1" in
+        SSH|Ssh|ssh)
+            open_port 22 tcp
+            ;;
+        WEB|Web|web)
+            open_port 80 tcp
+            open_port 442 tcp
+            ;;
+        HTTP|Http|http)
+            open_port 80 tcp
+            ;;
+        HTTPS|Https|https)
+            open_port 443 tcp
+            ;;
+        DNS|Dns|dns)
+            open_port 53 tcp
+            open_port 53 udp
+            ;;
+        *)
+            open_port "$1" "$2"
+            ;;
+    esac
+}

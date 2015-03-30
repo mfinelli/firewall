@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Get include path.
+dir="${BASH_SOURCE%/*}"
+if [[ ! -d "$dir" ]]; then
+    dir="$PWD"
+fi
+
+# Include functions.
+source "$dir"/include.sh
+source "$dir"/reset.sh
+source "$dir"/stateful.sh
+source "$dir"/portscanner.sh
+source "$dir"/sshguard.sh
+source "$dir"/open.sh
+
+# Make sure we're running as root as required by iptables.
+check_root
+
+# Make sure that iptables is actually installed.
+check_software "iptables"
+
+case "$1" in
+    reset)
+        echo "Resetting all firewall rules."
+        reset_firewall
+        ;;
+    stateful)
+        echo "Setting the firewall to a stateful state."
+        set_stateful_firewall
+        ;;
+    sshguard)
+        check_software "sshguard"
+        echo "Adding sshguard rules."
+        add_sshguard_rules
+        ;;
+    portscanner)
+        echo "Adding the port scanner rules."
+        add_portscanner_rules
+        ;;
+    open)
+        shift
+        open_port_entry "$@"
+        ;;
+    *)
+        echo "unrecognized command" ;;
+esac
