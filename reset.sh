@@ -1,33 +1,20 @@
-#!/bin/bash
+# This function removes all of the rules and resets the firewall to a
+# default state.
+function reset_firewall () {
+    # We don't need "filter" here because that's the default table and is
+    # cleared first by calling the commands with no table argument.
+    tables=('nat' 'mangle' 'raw' 'security')
 
-# Get include path. (http://stackoverflow.com/a/12694189)
-dir="${BASH_SOURCE%/*}"
-if [[ ! -d "$dir" ]]; then
-    dir="$PWD"
-fi
+    iptables -F
+    iptables -X
 
-# Include functions.
-source "$dir"/include.sh
+    for table in "${tables[@]}"
+    do
+        iptables -t "$table" -F
+        iptables -t "$table" -X
+    done
 
-# Make sure that we have permission.
-check_root
-
-# Make sure that iptables is actually installed.
-check_software "iptables"
-
-# Now we can actually change the iptables rules. We don't need "filter" here
-# because that's the default table and is taken care of first, below.
-tables=('nat' 'mangle' 'raw' 'security')
-
-iptables -F
-iptables -X
-
-for table in "${tables[@]}"
-do
-    iptables -t "$table" -F
-    iptables -t "$table" -X
-done
-
-iptables -P INPUT ACCEPT
-iptables -P FORWARD ACCEPT
-iptables -P OUTPUT ACCEPT
+    iptables -P INPUT ACCEPT
+    iptables -P FORWARD ACCEPT
+    iptables -P OUTPUT ACCEPT
+}

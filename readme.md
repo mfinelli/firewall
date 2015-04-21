@@ -1,40 +1,40 @@
 # firewall
 
-A set of scripts to manage the firewall on Linux using iptables.
+A script to manage the firewall on Linux using iptables.
 
 ## Standard Usage
 
-There are various scripts that perform various functions to manage the firewall. They should generally be run in this order.
+There is only one script that you need to run to manage the firewall but to which you can pass various commands. They should generally be run in the order presented. Note that all commands need to be executed with root privileges (e.g., by using sudo).
 
 ### Reset rules
 
-This script resets the iptables to an empty state, allowing all traffic.
+This command resets the iptables to an empty state, allowing all traffic.
 
-    $ ./reset.sh
+    # ./firewall reset
 
 ### Stateful firewall
 
-This sets the firewall to be like the Arch Linux guide. No ports are open so you shouldn't run this from an SSH session.
+This sets the firewall to be like the Arch Linux guide. No ports are left open so you shouldn't run this from an SSH session.
 
-    $ ./stateful.sh
+    # ./firewall stateful
 
 ### Port scanner
 
 Attempt to mitigate port scanner attacks.
 
-    $ ./portscanner.sh
+    # ./firewall portscanner
 
 ### Sshguard
 
 Once you've installed sshguard you can add rules to your iptables. This will also automatically setup sshguard to work on port 22. You will still need to open port 22 in order to connect via ssh. (See below)
 
-    $ ./sshguard.sh
+    # ./firewall sshguard
 
 ### Open
 
 You can open individual ports in the firewall with this script. There are two ways to call this script. You can pass one of the predefined rules or an individual port number along with the protocol. To open with a predefined rule (e.g., SSH through port 22):
 
-    $ ./open.sh ssh
+    # ./firewall open ssh
 
 The complete list of supported rules is:
 * SSH: port 22
@@ -45,11 +45,11 @@ The complete list of supported rules is:
 
 To open an arbitrary port:
 
-    $ ./open.sh 22 tcp
+    # ./firewall open 22 tcp
 
 Or:
 
-    $ ./open.sh 53 udp
+    # ./firewall open 53 udp
 
 ## What next?
 
