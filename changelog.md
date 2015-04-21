@@ -1,7 +1,7 @@
 # Change Log
 This is the change log for the firewall project, which adheres to [semantic versioning](http://semver.org/).
 
-## [Unreleased]
+## [2.0.0] - 2015-04-20
 ### Changed
 - Switch to a single point of entry. Instead of calling many different scripts now you just call the firewall script and pass it the command you want to execute.
 
