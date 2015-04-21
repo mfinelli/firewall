@@ -42,6 +42,7 @@ The complete list of supported rules is:
 * HTTP: port 80
 * HTTPS: port 443
 * DNS: port 53
+* NTP: port 12 (UDP only)
 
 To open an arbitrary port:
 

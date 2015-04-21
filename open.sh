@@ -27,6 +27,9 @@ function open_port_entry () {
             open_port 53 tcp
             open_port 53 udp
             ;;
+        NTP|Ntp|ntp)
+            open_port 123 udp
+            ;;
         *)
             open_port "$1" "$2"
             ;;
