@@ -30,6 +30,9 @@ function open_port_entry () {
         NTP|Ntp|ntp)
             open_port 123 udp
             ;;
+        MYSQL|MySQL|Mysql|mysql)
+            open_port 3306 tcp
+            ;;
         *)
             open_port "$1" "$2"
             ;;
